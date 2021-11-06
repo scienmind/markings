@@ -30,7 +30,7 @@ class PyTest(TestCommand):
         sys.exit(errno)
 
 def parse_requirements_file(file_name):
-    with pathlib.Path(file_name).open() as requirements_txt:
+    with pathlib.Path(os.path.join(here, file_name)).open() as requirements_txt:
         install_requires = [
             str(requirement)
             for requirement
@@ -55,4 +55,5 @@ setup(
         'dev': parse_requirements_file("requirements-dev.txt")
     },
     cmdclass={"test": PyTest},
+    data_files=[("", ["requirements.txt", "requirements-test.txt", "requirements-dev.txt"])],
 )
